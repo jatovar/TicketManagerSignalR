@@ -44,18 +44,13 @@ namespace SEP.Movil.Business.Hubs
             switch(estado)
             {
                 case EstadoTicket.Cerrado:
-                    await Hub.Clients.All.InvokeAsync("ticketCerrado", id , operador);
-                break;
-                case EstadoTicket.Abierto:
-                    await Hub.Clients.All.InvokeAsync("ticketAbierto", id , operador);
-                break;
-                case EstadoTicket.EnProceso:
-                    await Hub.Clients.All.InvokeAsync("ticketEnProceso", id , operador);
+                    tickets.Remove(ticketFound);
                 break;
                 case EstadoTicket.Descartado:
-                    await Hub.Clients.All.InvokeAsync("ticketDescartado", id , operador);
+                    tickets.Remove(ticketFound);
                 break;
             }
+            await Hub.Clients.All.InvokeAsync("refrescaTickets", tickets);
         }
         public IEnumerable<Ticket> ObtieneTickets()
         {
@@ -69,10 +64,11 @@ namespace SEP.Movil.Business.Hubs
                 Id = random.ToString(),
                 UsuarioReporte = "jatovar",
                 Fecha = DateTime.Now,
+                Motivo = "Problema en pc",
                 Status = EstadoTicket.Abierto
             };
-            var json = JsonConvert.SerializeObject(ticket);
-            await Hub.Clients.All.InvokeAsync("nuevoTicket", json);
+            tickets.Add(ticket);
+            await Hub.Clients.All.InvokeAsync("refrescaTickets", tickets);
         }
     }
 }
