@@ -37,9 +37,9 @@ namespace SEP.Movil.Business.Hubs
         internal async Task BroadcastCambiaEstado(string id, string operador, EstadoTicket estado)
         {
             var ticketFound = tickets.Find(ticket => ticket.Id == id);
-            
-            ticketFound.Status = estado;
-            ticketFound.AtendidoPor = operador;
+            var index = tickets.IndexOf(ticketFound);
+            tickets[index].Status = estado;
+            tickets[index].AtendidoPor = operador;
 
             switch(estado)
             {
