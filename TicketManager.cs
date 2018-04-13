@@ -49,6 +49,10 @@ namespace SEP.Movil.Business.Hubs
                 case EstadoTicket.Descartado:
                     tickets.Remove(ticketFound);
                 break;
+                case EstadoTicket.Abierto:
+                    tickets[index].AtendidoPor = String.Empty;
+
+                break;
             }
             await Hub.Clients.All.InvokeAsync("refrescaTickets", tickets);
         }
