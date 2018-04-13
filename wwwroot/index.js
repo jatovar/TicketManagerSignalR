@@ -46,7 +46,7 @@ $(function () {
         noDataText: "Aún no hay tickets",
         columns: [
             { caption: "Id", dataField: "id"},
-            { caption: "atendidoPor", dataField: "Cambiado por", },
+            { caption: "Cambiado Por", dataField: "atendidoPor", },
             { caption: "UsuarioReporte", dataField: "usuarioReporte", },
             { caption: "Fecha", dataField: "fecha", dataType: 'datetime', format: 'dd/MM/yyyy hh:mm:ssa' },
             { caption: "Motivo", dataField: "motivo", },
